@@ -21,7 +21,7 @@ class _PaymentHomePageState extends State<PaymentHomePage> {
   String _selectedPaymentMethod = 'Card';
   bool _isProcessing = false;
   final List<Transaction> _transactions = [];
-  final Awesome _sdkInstance = Awesome();
+  final _sdkInstance = OmnexPaySDK.instance;
 
   @override
   void dispose() {
@@ -127,7 +127,7 @@ class _PaymentHomePageState extends State<PaymentHomePage> {
                               width: 8,
                               height: 8,
                               decoration: BoxDecoration(
-                                color: _sdkInstance.isAwesome
+                                color: _sdkInstance.isConnected
                                     ? Colors.green
                                     : Colors.red,
                                 shape: BoxShape.circle,
@@ -135,7 +135,7 @@ class _PaymentHomePageState extends State<PaymentHomePage> {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              _sdkInstance.isAwesome
+                              _sdkInstance.isConnected
                                   ? 'SDK Connected'
                                   : 'SDK Disconnected',
                               style: Theme.of(context).textTheme.bodySmall,
