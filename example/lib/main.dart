@@ -21,7 +21,7 @@ class OmnexPayDemoApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 1, 59, 1), // Indigo color
+          seedColor: const Color.fromARGB(255, 75, 210, 237), // Indigo color
           brightness: Brightness.light,
         ),
         useMaterial3: true,
