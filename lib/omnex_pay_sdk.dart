@@ -10,7 +10,7 @@ export 'src/omnex_pay_sdk_base.dart';
 export 'src/widgets/payment_home_page.dart';
 // export 'src/core/api_handel/repositories/omnex_payment_repo.dart';
 // export 'src/core/api_handel/network/api_client.dart';
-// export 'src/core/api_handel/api_mathod/api_mathod.dart';
+// export 'src/core/api_handel/api_method/api_method.dart';
 // export 'src/core/error_handels/api_result.dart';
 // export 'src/core/error_handels/omnex_errors.dart';
 // export 'src/core/error_handels/omnex_network_error.dart';

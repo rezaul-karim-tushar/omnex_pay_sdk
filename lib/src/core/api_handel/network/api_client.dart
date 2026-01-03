@@ -2,14 +2,14 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:omnex_pay_sdk/src/core/api_handel/api_mathod/api_mathod.dart';
+import 'package:omnex_pay_sdk/src/core/api_handel/api_method/api_method.dart';
 import 'package:omnex_pay_sdk/src/core/error_handels/api_result.dart';
 import 'package:omnex_pay_sdk/src/core/error_handels/omnex_errors.dart';
 import 'package:omnex_pay_sdk/src/core/error_handels/omnex_network_error.dart';
 import 'package:omnex_pay_sdk/src/core/error_handels/omnex_unknown_error.dart';
 
 
-class ApiClient extends ApiMathod {
+class ApiClient extends ApiMethod {
   final String baseUrl;
   ApiClient({required this.baseUrl});
 

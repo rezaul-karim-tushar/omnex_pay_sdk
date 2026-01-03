@@ -1,8 +1,8 @@
 import 'package:omnex_pay_sdk/src/core/api_handel/network/api_client.dart';
-import '../api_mathod/api_mathod.dart';
+import '../api_method/api_method.dart';
 import '../models/model.dart';
 
-class OmnexPaymentRepo extends RepoMathod {
+class OmnexPaymentRepo extends RepoMethod {
   final ApiClient apiClient;
   OmnexPaymentRepo({required this.apiClient});
 
