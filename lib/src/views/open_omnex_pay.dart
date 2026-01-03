@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:omnex_pay_sdk/src/core/api_handel/network/api_client.dart';
-import 'package:omnex_pay_sdk/src/core/api_handel/repositories/omnex_payment_repo.dart';
-import 'package:omnex_pay_sdk/src/core/api_handel/models/model.dart';
+import 'package:omnex_pay_sdk/src/core/api_handle/network/api_client.dart';
+import 'package:omnex_pay_sdk/src/core/api_handle/repositories/omnex_payment_repo.dart';
+import 'package:omnex_pay_sdk/src/core/api_handle/models/model.dart';
 
 class OpenOmnexPay {
   String baseUrl;

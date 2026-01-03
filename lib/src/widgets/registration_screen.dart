@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../views/open_omnex_pay.dart';
-import '../core/api_handel/models/model.dart';
+import '../core/api_handle/models/model.dart';
 import 'response_display_widget.dart';
 
 class RegistrationScreen extends StatefulWidget {

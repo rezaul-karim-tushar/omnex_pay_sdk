@@ -1,4 +1,4 @@
-import 'package:omnex_pay_sdk/src/core/api_handel/network/api_client.dart';
+import 'package:omnex_pay_sdk/src/core/api_handle/network/api_client.dart';
 import '../api_method/api_method.dart';
 import '../models/model.dart';
 
