@@ -35,7 +35,7 @@ class OmnexPayDemoApp extends StatelessWidget {
       home: PaymentHomePage(
         baseUrl: 'https://uatomnex.necmoney.com/api',
         apiKey: '326972B17658A6558F66688A81FAD',
-        remitInfoEndpoint: 'service/OmRemitInfo',
+        remitInfoEndpoint: '/service/OmRemitInfo',
         registrationEndpoint: '/service/OmRegistration',
         transactionEndpoint: '/service/OmTransaction',
       ),
