@@ -2,7 +2,7 @@ import '../../error_handels/api_result.dart';
 import '../models/model.dart';
 
 abstract class ApiMathod {
-   Future<ApiResult<Map<String, dynamic>>> post(String endpoint, Map<String,dynamic> body, {String? apiKey});
+   Future<ApiResult<Map<String, dynamic>>> post(String endpoint, Map<String,dynamic> body, {String? apiKey, Map<String, String>? queryParams});
 }
 
 

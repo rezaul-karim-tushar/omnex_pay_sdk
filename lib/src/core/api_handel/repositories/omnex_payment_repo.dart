@@ -8,7 +8,7 @@ class OmnexPaymentRepo extends RepoMathod {
 
   @override
   Future<Map<String, dynamic>> getRemitInfo(String id, String apiendpoint, String apiKey) async {
-    return await apiClient.post(apiendpoint, {'id': id}, apiKey: apiKey).then((result){
+    return await apiClient.post(apiendpoint, {}, queryParams: {'id': id}, apiKey: apiKey).then((result){
       if (result.isSuccess && result.data != null) {
         if (result.data!.containsKey("data") && result.data!["data"] != null) {
           final data = result.data!["data"];

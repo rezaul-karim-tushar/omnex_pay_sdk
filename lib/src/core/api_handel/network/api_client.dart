@@ -14,15 +14,18 @@ class ApiClient extends ApiMathod {
   ApiClient({required this.baseUrl});
 
   @override
-  Future<ApiResult<Map<String, dynamic>>> post(String endpoint, Map<String,dynamic> body, {String? apiKey})async{
-      final url = Uri.parse('$baseUrl$endpoint');
+  Future<ApiResult<Map<String, dynamic>>> post(String endpoint, Map<String,dynamic> body, {String? apiKey, Map<String, String>? queryParams})async{
+      var uri = Uri.parse('$baseUrl$endpoint');
+      if (queryParams != null && queryParams.isNotEmpty) {
+        uri = uri.replace(queryParameters: queryParams);
+      }
       final headers = {'Content-Type': 'application/json'};
       if (apiKey != null) {
         headers['Authorization'] = 'ApiKey $apiKey';
       }
       
       try {
-        final responce = await http.post(url, headers: headers, body: jsonEncode(body));
+        final responce = await http.post(uri, headers: headers, body: jsonEncode(body));
         if (responce.statusCode == 200){
           return ApiResult.success(jsonDecode(responce.body));
         }else{
