@@ -28,53 +28,23 @@ class ApiClient extends ApiMathod {
       }
       
       try {
-        print("POST Request URL: $url");
-        print("POST Request Headers: $headers");
-        print("POST Request Body: ${jsonEncode(body)}");
-        
         final responce = await http.post(url, headers: headers, body: jsonEncode(body));
-        
-        print("Response Status Code: ${responce.statusCode}");
-        print("Response Body: ${responce.body}");
-        
         if (responce.statusCode == 200){
-          try {
-            final decodedResponse = jsonDecode(responce.body);
-            print("Decoded Response: $decodedResponse");
-            return ApiResult.success(decodedResponse);
-          } catch (e) {
-            print("JSON Decode Error: $e");
-            return ApiResult.failure(
-              OmnexUnknownError('Failed to parse response: ${e.toString()}'),
-            );
-          }
+          return ApiResult.success(jsonDecode(responce.body));
         }else{
-          try {
-            final errorBody = jsonDecode(responce.body);
-            return ApiResult.failure(
-              OmnexApiErrors(
-                statusCode: responce.statusCode,
-                message: 'API Error',
-                body: errorBody,
-              )
-            );
-          } catch (e) {
-            return ApiResult.failure(
-              OmnexApiErrors(
-                statusCode: responce.statusCode,
-                message: 'API Error: ${responce.body}',
-                body: null,
-              )
-            );
-          }
+          return ApiResult.failure(
+            OmnexApiErrors(
+              statusCode: responce.statusCode,
+              message: 'API Error',
+              body: jsonDecode(responce.body),
+            )
+          );
         }
       } on http.ClientException catch (e) {
-        print("Client Exception: $e");
         return ApiResult.failure(
           OmnexNetworkError('Network Error', "${e.message}"),
         );
       }catch(e){
-        print("Unknown Exception: $e");
         return ApiResult.failure(
           OmnexUnknownError('Unknown Error: ${e.toString()}'),
         );
@@ -98,52 +68,23 @@ class ApiClient extends ApiMathod {
     }
     
     try {
-      print("POST With Query Request URL: $uri");
-      print("POST With Query Request Headers: $headers");
-      
       final responce = await http.post(uri, headers: headers);
-      
-      print("POST With Query Response Status Code: ${responce.statusCode}");
-      print("POST With Query Response Body: ${responce.body}");
-      
       if (responce.statusCode == 200){
-        try {
-          final decodedResponse = jsonDecode(responce.body);
-          print("POST With Query Decoded Response: $decodedResponse");
-          return ApiResult.success(decodedResponse);
-        } catch (e) {
-          print("POST With Query JSON Decode Error: $e");
-          return ApiResult.failure(
-            OmnexUnknownError('Failed to parse response: ${e.toString()}'),
-          );
-        }
+        return ApiResult.success(jsonDecode(responce.body));
       }else{
-        try {
-          final errorBody = jsonDecode(responce.body);
-          return ApiResult.failure(
-            OmnexApiErrors(
-              statusCode: responce.statusCode,
-              message: 'API Error',
-              body: errorBody,
-            )
-          );
-        } catch (e) {
-          return ApiResult.failure(
-            OmnexApiErrors(
-              statusCode: responce.statusCode,
-              message: 'API Error: ${responce.body}',
-              body: null,
-            )
-          );
-        }
+        return ApiResult.failure(
+          OmnexApiErrors(
+            statusCode: responce.statusCode,
+            message: 'API Error',
+            body: jsonDecode(responce.body),
+          )
+        );
       }
     } on http.ClientException catch (e) {
-      print("POST With Query Client Exception: $e");
       return ApiResult.failure(
         OmnexNetworkError('Network Error', "${e.message}"),
       );
     }catch(e){
-      print("POST With Query Unknown Exception: $e");
       return ApiResult.failure(
         OmnexUnknownError('Unknown Error: ${e.toString()}'),
       );
@@ -173,52 +114,23 @@ class ApiClient extends ApiMathod {
     }
     
     try {
-      print("GET Request URL: $uri");
-      print("GET Request Headers: $headers");
-      
       final responce = await http.get(uri, headers: headers.isEmpty ? null : headers);
-      
-      print("GET Response Status Code: ${responce.statusCode}");
-      print("GET Response Body: ${responce.body}");
-      
       if (responce.statusCode == 200){
-        try {
-          final decodedResponse = jsonDecode(responce.body);
-          print("GET Decoded Response: $decodedResponse");
-          return ApiResult.success(decodedResponse);
-        } catch (e) {
-          print("GET JSON Decode Error: $e");
-          return ApiResult.failure(
-            OmnexUnknownError('Failed to parse response: ${e.toString()}'),
-          );
-        }
+        return ApiResult.success(jsonDecode(responce.body));
       }else{
-        try {
-          final errorBody = jsonDecode(responce.body);
-          return ApiResult.failure(
-            OmnexApiErrors(
-              statusCode: responce.statusCode,
-              message: 'API Error',
-              body: errorBody,
-            )
-          );
-        } catch (e) {
-          return ApiResult.failure(
-            OmnexApiErrors(
-              statusCode: responce.statusCode,
-              message: 'API Error: ${responce.body}',
-              body: null,
-            )
-          );
-        }
+        return ApiResult.failure(
+          OmnexApiErrors(
+            statusCode: responce.statusCode,
+            message: 'API Error',
+            body: jsonDecode(responce.body),
+          )
+        );
       }
     } on http.ClientException catch (e) {
-      print("GET Client Exception: $e");
       return ApiResult.failure(
         OmnexNetworkError('Network Error', "${e.message}"),
       );
     }catch(e){
-      print("GET Unknown Exception: $e");
       return ApiResult.failure(
         OmnexUnknownError('Unknown Error: ${e.toString()}'),
       );

@@ -24,9 +24,6 @@ class OpenOmnexPay {
       final response = await repo.getRemitInfo(id, apiendpoint, apiKey!);
       return response;
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to get remit info: $e')),
-      );
       rethrow;
     }
   }
@@ -44,9 +41,6 @@ class OpenOmnexPay {
       final response = await repo.register(requestModel, apiendpoint, apiKey!);
       return response;
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to register: $e')),
-      );
       rethrow;
     }
   }
@@ -64,9 +58,6 @@ class OpenOmnexPay {
       final response = await repo.createTransaction(requestModel, apiendpoint, apiKey!);
       return response;
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to create transaction: $e')),
-      );
       rethrow;
     }
   }

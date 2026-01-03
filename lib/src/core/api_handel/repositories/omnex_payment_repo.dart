@@ -8,24 +8,16 @@ class OmnexPaymentRepo extends RepoMathod {
 
   @override
   Future<Map<String, dynamic>> getRemitInfo(String id, String apiendpoint, String apiKey) async {
-    // POST request with query parameter in URL (not in body)
     return await apiClient.postWithQuery(apiendpoint, {'id': id}, apiKey: apiKey).then((result){
-      print("Remit Info API Response: ${result.data}");
-      print("Is Success: ${result.isSuccess}");
-      print("Error: ${result.error}");
-      
       if (result.isSuccess && result.data != null) {
-        // Check if response has nested "data" field
         if (result.data!.containsKey("data") && result.data!["data"] != null) {
           final data = result.data!["data"];
           if (data is Map<String, dynamic>) {
             return Map<String, dynamic>.from(data);
           } else {
-            // If data is not a map, return the full response
             return Map<String, dynamic>.from(result.data!);
           }
         } else {
-          // Return full response if no nested data field
           return Map<String, dynamic>.from(result.data!);
         }
       } else {
@@ -37,10 +29,6 @@ class OmnexPaymentRepo extends RepoMathod {
   @override
   Future<Map<String, dynamic>> register(OmRegistrationModel requestModel, String apiendpoint, String apiKey) async {
     return await apiClient.post(apiendpoint, requestModel.toJson(), apiKey: apiKey).then((result){
-      print("Registration API Response: ${result.data}");
-      print("Is Success: ${result.isSuccess}");
-      print("Error: ${result.error}");
-      
       if (result.isSuccess && result.data != null) {
         return Map<String, dynamic>.from(result.data!);
       } else {
@@ -52,10 +40,6 @@ class OmnexPaymentRepo extends RepoMathod {
   @override
   Future<Map<String, dynamic>> createTransaction(OmTransactionModel requestModel, String apiendpoint, String apiKey) async {
     return await apiClient.post(apiendpoint, requestModel.toJson(), apiKey: apiKey).then((result){
-      print("Transaction API Response: ${result.data}");
-      print("Is Success: ${result.isSuccess}");
-      print("Error: ${result.error}");
-      
       if (result.isSuccess && result.data != null) {
         return Map<String, dynamic>.from(result.data!);
       } else {

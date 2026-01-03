@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../views/open_omnex_pay.dart';
 import '../core/api_handel/models/model.dart';
+import 'response_display_widget.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final String baseUrl;
@@ -74,9 +75,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future<void> _register() async {
     if (_firstNameController.text.isEmpty || _firstLastNameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in required fields')),
-      );
       return;
     }
 
@@ -86,12 +84,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     });
 
     try {
-      // Log the form data being sent
-      print("Registration Form Data:");
-      print("First Name: ${_firstNameController.text}");
-      print("Last Name: ${_firstLastNameController.text}");
-      print("Remitter ID: ${_remitterIdController.text}");
-      
       final registrationModel = OmRegistrationModel(
         remitterId: _remitterIdController.text,
         clientId: 0,
@@ -135,9 +127,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         occupation: OccupationModel(),
       );
 
-      // Log the JSON being sent
-      print("Registration Request JSON: ${registrationModel.toJson()}");
-
       final response = await _omnexPay.register(
         requestModel: registrationModel,
         apiendpoint: widget.endpoint,
@@ -148,27 +137,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         _responseData = response;
         _isLoading = false;
       });
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Registration successful!'),
-          backgroundColor: Colors.green,
-        ),
-      );
     } catch (e) {
       setState(() {
         _isLoading = false;
-      });
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: $e'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 5),
-        ),
-      );
-      
-      setState(() {
         _responseData = {'error': e.toString()};
       });
     }
@@ -177,225 +148,70 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Registration'),
-        backgroundColor: Colors.green,
-      ),
+      appBar: AppBar(title: const Text('Registration')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: _remitterIdController,
-              decoration: const InputDecoration(
-                labelText: 'Remitter ID',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _remitterIdController, decoration: const InputDecoration(labelText: 'Remitter ID', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _firstNameController,
-              decoration: const InputDecoration(
-                labelText: 'First Name *',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _firstNameController, decoration: const InputDecoration(labelText: 'First Name', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _firstLastNameController,
-              decoration: const InputDecoration(
-                labelText: 'Last Name *',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _firstLastNameController, decoration: const InputDecoration(labelText: 'Last Name', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _phoneController,
-              decoration: const InputDecoration(
-                labelText: 'Phone',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _phoneController, decoration: const InputDecoration(labelText: 'Phone', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _countryIso3Controller,
-              decoration: const InputDecoration(
-                labelText: 'Country ISO3',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _countryIso3Controller, decoration: const InputDecoration(labelText: 'Country ISO3', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _address1Controller,
-              decoration: const InputDecoration(
-                labelText: 'Address',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _address1Controller, decoration: const InputDecoration(labelText: 'Address', border: OutlineInputBorder())),
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: _cityController,
-                    decoration: const InputDecoration(
-                      labelText: 'City',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
+                Expanded(child: TextField(controller: _cityController, decoration: const InputDecoration(labelText: 'City', border: OutlineInputBorder()))),
                 const SizedBox(width: 12),
-                Expanded(
-                  child: TextField(
-                    controller: _zipController,
-                    decoration: const InputDecoration(
-                      labelText: 'ZIP',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
+                Expanded(child: TextField(controller: _zipController, decoration: const InputDecoration(labelText: 'ZIP', border: OutlineInputBorder()))),
               ],
             ),
             const SizedBox(height: 12),
-            TextField(
-              controller: _stateIdController,
-              decoration: const InputDecoration(
-                labelText: 'State ID',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _stateIdController, decoration: const InputDecoration(labelText: 'State ID', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _countryBankIdController,
-              decoration: const InputDecoration(
-                labelText: 'Country Bank ID',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _countryBankIdController, decoration: const InputDecoration(labelText: 'Country Bank ID', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _accountNumberController,
-              decoration: const InputDecoration(
-                labelText: 'Account Number',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _accountNumberController, decoration: const InputDecoration(labelText: 'Account Number', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _branchController,
-              decoration: const InputDecoration(
-                labelText: 'Branch',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _branchController, decoration: const InputDecoration(labelText: 'Branch', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _idTypeController,
-              decoration: const InputDecoration(
-                labelText: 'ID Type',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _idTypeController, decoration: const InputDecoration(labelText: 'ID Type', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _idNumberController,
-              decoration: const InputDecoration(
-                labelText: 'ID Number',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _idNumberController, decoration: const InputDecoration(labelText: 'ID Number', border: OutlineInputBorder())),
             const SizedBox(height: 12),
-            TextField(
-              controller: _idIssuedByController,
-              decoration: const InputDecoration(
-                labelText: 'Issued By',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            TextField(controller: _idIssuedByController, decoration: const InputDecoration(labelText: 'Issued By', border: OutlineInputBorder())),
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: _issueDateController,
-                    decoration: const InputDecoration(
-                      labelText: 'Issue Date',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
+                Expanded(child: TextField(controller: _issueDateController, decoration: const InputDecoration(labelText: 'Issue Date', border: OutlineInputBorder()))),
                 const SizedBox(width: 12),
-                Expanded(
-                  child: TextField(
-                    controller: _expirationDateController,
-                    decoration: const InputDecoration(
-                      labelText: 'Expiration Date',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
+                Expanded(child: TextField(controller: _expirationDateController, decoration: const InputDecoration(labelText: 'Expiration Date', border: OutlineInputBorder()))),
               ],
             ),
             const SizedBox(height: 12),
-            TextField(
-              controller: _repIdsController,
-              decoration: const InputDecoration(
-                labelText: 'Rep IDs',
-                border: OutlineInputBorder(),
+            TextField(controller: _repIdsController, decoration: const InputDecoration(labelText: 'Rep IDs', border: OutlineInputBorder())),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _isLoading ? null : _register,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                child: _isLoading
+                    ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                    : const Text('Register'),
               ),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: _isLoading ? null : _register,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
-              child: _isLoading
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                    )
-                  : const Text('Register'),
             ),
             if (_responseData != null) ...[
-              const SizedBox(height: 24),
-              const Text(
-                'Response:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey[300]!),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _responseData!.entries.map((entry) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${entry.key}: ',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Expanded(
-                            child: Text(entry.value.toString()),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
+              const SizedBox(height: 20),
+              ResponseDisplayWidget(data: _responseData!),
             ],
           ],
         ),

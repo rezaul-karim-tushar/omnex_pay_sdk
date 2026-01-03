@@ -23,26 +23,15 @@ class PaymentHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Omnex Pay SDK'),
-        backgroundColor: Colors.blue,
-      ),
+      appBar: AppBar(title: const Text('Omnex Pay SDK')),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Select an API to test',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 48),
-            
-            // Remit Info Button
             SizedBox(
               width: double.infinity,
-              height: 60,
-              child: ElevatedButton.icon(
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -55,27 +44,16 @@ class PaymentHomePage extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.info_outline, size: 28),
-                label: const Text(
-                  'Remit Info',
-                  style: TextStyle(fontSize: 18),
-                ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
+                child: const Text('Remit Info'),
               ),
             ),
-            const SizedBox(height: 16),
-            
-            // Registration Button
+            const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
-              height: 60,
-              child: ElevatedButton.icon(
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -88,27 +66,16 @@ class PaymentHomePage extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.person_add, size: 28),
-                label: const Text(
-                  'Registration',
-                  style: TextStyle(fontSize: 18),
-                ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
+                child: const Text('Registration'),
               ),
             ),
-            const SizedBox(height: 16),
-            
-            // Transaction Button
+            const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
-              height: 60,
-              child: ElevatedButton.icon(
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -121,18 +88,10 @@ class PaymentHomePage extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.payment, size: 28),
-                label: const Text(
-                  'Transaction',
-                  style: TextStyle(fontSize: 18),
-                ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
+                child: const Text('Transaction'),
               ),
             ),
           ],

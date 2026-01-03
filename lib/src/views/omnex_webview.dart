@@ -32,11 +32,7 @@ class _OmnexWebViewState extends State<OmnexWebView> {
             });
           },
           onWebResourceError: (WebResourceError error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Error loading page: ${error.description}'),
-              ),
-            );
+            // Error handled silently
           },
         ),
       )
