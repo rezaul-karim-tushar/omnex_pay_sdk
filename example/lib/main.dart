@@ -4,7 +4,7 @@ import 'package:omnex_pay_sdk/omnex_pay_sdk.dart';
 void main() {
   // Initialize the SDK
   OmnexPaySDK.instance.initialize(
-    apiKey: 'demo_api_key_12345',
+    apiKey: '326972B17658A6558F66688A81FAD',
     environment: 'sandbox',
   );
   
@@ -32,7 +32,13 @@ class OmnexPayDemoApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const PaymentHomePage(),
+      home: PaymentHomePage(
+        baseUrl: 'https://uatomnex.necmoney.com/api',
+        apiKey: '326972B17658A6558F66688A81FAD',
+        remitInfoEndpoint: 'service/OmRemitInfo',
+        registrationEndpoint: '/service/OmRegistration',
+        transactionEndpoint: '/service/OmTransaction',
+      ),
     );
   }
 }
