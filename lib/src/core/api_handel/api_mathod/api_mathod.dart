@@ -3,7 +3,6 @@ import '../models/model.dart';
 
 abstract class ApiMathod {
    Future<ApiResult<Map<String, dynamic>>> post(String endpoint, Map<String,dynamic> body, {String? apiKey});
-   Future<ApiResult<Map<String, dynamic>>> postWithQuery(String endpoint, Map<String, String> queryParams, {String? apiKey});
 }
 
 

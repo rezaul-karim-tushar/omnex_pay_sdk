@@ -45,38 +45,5 @@ class ApiClient extends ApiMathod {
       }
     }
 
-  @override
-  Future<ApiResult<Map<String, dynamic>>> postWithQuery(String endpoint, Map<String, String> queryParams, {String? apiKey}) async {
-    var uri = Uri.parse('$baseUrl$endpoint');
-    uri = uri.replace(queryParameters: queryParams);
-    
-    final headers = {'Content-Type': 'application/json'};
-    if (apiKey != null) {
-      headers['Authorization'] = 'ApiKey $apiKey';
-    }
-    
-    try {
-      final responce = await http.post(uri, headers: headers);
-      if (responce.statusCode == 200){
-        return ApiResult.success(jsonDecode(responce.body));
-      }else{
-        return ApiResult.failure(
-          OmnexApiErrors(
-            statusCode: responce.statusCode,
-            message: 'API Error',
-            body: jsonDecode(responce.body),
-          )
-        );
-      }
-    } on http.ClientException catch (e) {
-      return ApiResult.failure(
-        OmnexNetworkError('Network Error', "${e.message}"),
-      );
-    }catch(e){
-      return ApiResult.failure(
-        OmnexUnknownError('Unknown Error: ${e.toString()}'),
-      );
-    }
-  }
 }
 
