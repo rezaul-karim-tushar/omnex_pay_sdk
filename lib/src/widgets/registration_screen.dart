@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import '../views/open_omnex_pay.dart';
 import '../core/api_handle/models/model.dart';
@@ -161,19 +162,58 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Future<void> _selectDateOfBirth(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    DateTime tempDate = _selectedDateOfBirth ?? DateTime.now().subtract(const Duration(days: 365 * 25));
+    
+    await showModalBottomSheet(
       context: context,
-      initialDate: _selectedDateOfBirth ?? DateTime.now().subtract(const Duration(days: 365 * 25)),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      initialDatePickerMode: DatePickerMode.year,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          height: 300,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _selectedDateOfBirth = tempDate;
+                          _dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(tempDate);
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Done'),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  initialDateTime: tempDate,
+                  mode: CupertinoDatePickerMode.date,
+                  maximumDate: DateTime.now(),
+                  minimumDate: DateTime(1900),
+                  onDateTimeChanged: (DateTime newDate) {
+                    tempDate = newDate;
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
-    if (picked != null && picked != _selectedDateOfBirth) {
-      setState(() {
-        _selectedDateOfBirth = picked;
-        _dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(picked);
-      });
-    }
   }
 
   @override
