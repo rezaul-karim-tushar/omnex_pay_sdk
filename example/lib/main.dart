@@ -17,7 +17,7 @@ class OmnexPayDemoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Omnex Pay SDK Demo',
+      title: 'Omnex Pay SDK',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
