@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../views/open_omnex_pay.dart';
 import '../core/api_handle/models/model.dart';
 import 'response_display_widget.dart';
@@ -38,6 +39,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _expirationDateController = TextEditingController(text: '2030-12-31');
   final _issueDateController = TextEditingController(text: '2025-12-31');
   final _repIdsController = TextEditingController(text: '187303');
+  final _middleNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _employerController = TextEditingController();
+  final _employerAddressController = TextEditingController();
+  final _employerPhoneController = TextEditingController();
+  final _dateOfBirthController = TextEditingController();
+
+  DateTime? _selectedDateOfBirth;
 
   bool _isLoading = false;
   Map<String, dynamic>? _responseData;
@@ -70,6 +79,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _expirationDateController.dispose();
     _issueDateController.dispose();
     _repIdsController.dispose();
+    _middleNameController.dispose();
+    _emailController.dispose();
+    _employerController.dispose();
+    _employerAddressController.dispose();
+    _employerPhoneController.dispose();
+    _dateOfBirthController.dispose();
     super.dispose();
   }
 
@@ -87,7 +102,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       final registrationModel = OmRegistrationModel(
         remitterId: _remitterIdController.text,
         clientId: 0,
-        dateOfBirth: '',
+        dateOfBirth: _selectedDateOfBirth != null ? DateFormat('yyyy-MM-dd').format(_selectedDateOfBirth!) : '',
         phones: [PhoneModel(phone: _phoneController.text)],
         banks: [
           BankModel(
@@ -112,7 +127,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         birthCountryIso3: '',
         countryIso3: _countryIso3Controller.text,
         firstName: _firstNameController.text.trim(),
-        middleName: '',
+        middleName: _middleNameController.text.trim(),
         firstLastName: _firstLastNameController.text.trim(),
         secondLastName: '',
         address1: _address1Controller.text,
@@ -120,10 +135,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         city: _cityController.text,
         zip: _zipController.text,
         clientTypeId: 1,
-        email: '',
-        employer: '',
-        employerAddress: '',
-        employerPhone: '',
+        email: _emailController.text.trim(),
+        employer: _employerController.text.trim(),
+        employerAddress: _employerAddressController.text.trim(),
+        employerPhone: _employerPhoneController.text.trim(),
         occupation: OccupationModel(),
       );
 
@@ -145,6 +160,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+  Future<void> _selectDateOfBirth(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDateOfBirth ?? DateTime.now().subtract(const Duration(days: 365 * 25)),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      initialDatePickerMode: DatePickerMode.year,
+    );
+    if (picked != null && picked != _selectedDateOfBirth) {
+      setState(() {
+        _selectedDateOfBirth = picked;
+        _dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,9 +188,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(height: 12),
             TextField(controller: _firstNameController, decoration: const InputDecoration(labelText: 'First Name', border: OutlineInputBorder())),
             const SizedBox(height: 12),
+            TextField(controller: _middleNameController, decoration: const InputDecoration(labelText: 'Middle Name', border: OutlineInputBorder())),
+            const SizedBox(height: 12),
             TextField(controller: _firstLastNameController, decoration: const InputDecoration(labelText: 'Last Name', border: OutlineInputBorder())),
             const SizedBox(height: 12),
+            TextField(
+              controller: _dateOfBirthController,
+              decoration: const InputDecoration(
+                labelText: 'Date of Birth',
+                border: OutlineInputBorder(),
+                suffixIcon: Icon(Icons.calendar_today),
+              ),
+              readOnly: true,
+              onTap: () => _selectDateOfBirth(context),
+            ),
+            const SizedBox(height: 12),
             TextField(controller: _phoneController, decoration: const InputDecoration(labelText: 'Phone', border: OutlineInputBorder())),
+            const SizedBox(height: 12),
+            TextField(controller: _emailController, decoration: const InputDecoration(labelText: 'Email', border: OutlineInputBorder()), keyboardType: TextInputType.emailAddress),
             const SizedBox(height: 12),
             TextField(controller: _countryIso3Controller, decoration: const InputDecoration(labelText: 'Country ISO3', border: OutlineInputBorder())),
             const SizedBox(height: 12),
@@ -196,6 +242,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             const SizedBox(height: 12),
             TextField(controller: _repIdsController, decoration: const InputDecoration(labelText: 'Rep IDs', border: OutlineInputBorder())),
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 12),
+            const Text('Employer Information', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            TextField(controller: _employerController, decoration: const InputDecoration(labelText: 'Employer', border: OutlineInputBorder())),
+            const SizedBox(height: 12),
+            TextField(controller: _employerAddressController, decoration: const InputDecoration(labelText: 'Employer Address', border: OutlineInputBorder()), maxLines: 2),
+            const SizedBox(height: 12),
+            TextField(controller: _employerPhoneController, decoration: const InputDecoration(labelText: 'Employer Phone', border: OutlineInputBorder()), keyboardType: TextInputType.phone),
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,

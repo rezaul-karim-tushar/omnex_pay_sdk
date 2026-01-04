@@ -9,6 +9,7 @@
       "dependencies": [
         "flutter",
         "http",
+        "intl",
         "meta",
         "webview_flutter"
       ],
@@ -52,6 +53,15 @@
       "name": "lints",
       "version": "6.0.0",
       "dependencies": []
+    },
+    {
+      "name": "intl",
+      "version": "0.19.0",
+      "dependencies": [
+        "clock",
+        "meta",
+        "path"
+      ]
     },
     {
       "name": "meta",
@@ -337,6 +347,11 @@
         "watcher",
         "yaml"
       ]
+    },
+    {
+      "name": "clock",
+      "version": "1.1.2",
+      "dependencies": []
     },
     {
       "name": "web",
